@@ -1,16 +1,21 @@
 <template>
   <h1>Users App</h1>
+  <users-filter />
+  <users-list />
 </template>
 
 <script>
-// import axios from 'axios'
+import UsersFilter from "./components/UsersFilter";
+import UsersList from "./components/UsersList";
 
 export default {
   name: "App",
-  components: {},
+  components: {
+    UsersFilter,
+    UsersList,
+  },
 };
 </script>
-
 <style lang="scss">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
