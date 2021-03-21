@@ -2,16 +2,14 @@
   <div class="users-list-container">
     <table>
       <tr>
-        <!-- <th class="data" scope="col">Id</th> -->
-        <th class="data" scope="col">Imię</th>
-        <th class="data" scope="col">Nazwisko</th>
-        <th class="data" scope="col">Kod Pocztowy</th>
-        <th class="data" scope="col">Ulica</th>
-        <th class="data" scope="col">Miasto</th>
-        <th class="data" scope="col">Wiek</th>
+        <th class="property" scope="col">Imię</th>
+        <th class="property" scope="col">Nazwisko</th>
+        <th class="property" scope="col">Kod Pocztowy</th>
+        <th class="property" scope="col">Ulica</th>
+        <th class="property" scope="col">Miasto</th>
+        <th class="property" scope="col">Wiek</th>
       </tr>
       <tr v-for="user in filterUsers" :key="user.id">
-        <!-- <td class="data">{{ user.id }}</td> -->
         <td class="data">{{ user.first_name }}</td>
         <td class="data">{{ user.last_name }}</td>
         <td class="data">{{ user.postal_code }}</td>
@@ -29,15 +27,7 @@ export default {
   name: "UsersList",
   computed: {
     ...mapGetters(["filterUsers"]),
-    // console.log(this.$store.state.filters);
-    // return this.$store.getters.filterUsers;
   },
-  // watch: {
-  //   users(filteredUsers) {
-  //     // console.log("filtered" + filteredUsers, "users" + users);
-  //     return filteredUsers;
-  //   },
-  // },
   methods: {
     getUsersList() {
       this.$store.dispatch("getUsers");
@@ -49,4 +39,14 @@ export default {
 };
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.users-list-container {
+  padding-top: 1.2em;
+  background-color: #473bbb;
+  color: #fff;
+  .property,
+  .data {
+    font-size: 0.6em;
+  }
+}
+</style>

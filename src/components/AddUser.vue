@@ -74,16 +74,19 @@ export default {
 .add-user-container {
   height: 100vh;
   width: 100vw;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
-  z-index: 999;
   background-color: #fff;
+  z-index: 999;
   opacity: 0.9;
   display: none;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  .add-user-form {
+    background-color: #fff;
+  }
   .box {
     margin: 1em;
 
@@ -106,7 +109,7 @@ export default {
       border: none;
       cursor: pointer;
       color: #473bbb;
-      background-color: transparent;
+      background-color: #fff;
       font-size: 1em;
     }
     .add-user-btn {

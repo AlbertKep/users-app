@@ -1,39 +1,28 @@
 <template>
   <div class="users-filter-container">
-    <form @submit.prevent>
-      <div class="box">
+    <form @submit.prevent="setFilters">
+      <div class="last-name-filter">
         <!-- <label for="search">Podaj nazwisko</label> -->
         <input
-          @input="setFilters"
           v-model.trim="last_name"
           type="text"
           id="search"
           placeholder="Podaj nazwisko"
         />
       </div>
-      <div class="box">
+      <div class="age-filters">
         <!-- <label for="from">Wiek od:</label> -->
-        <input
-          @input="setFilters"
-          v-model.trim="age_from"
-          placeholder="Wiek od:"
-          type="number"
-        />
+        <input v-model.trim="age_from" placeholder="Wiek od:" type="number" />
         <!-- <label for="to">Wiek do:</label> -->
-        <input
-          @input="setFilters"
-          v-model.trim="age_to"
-          placeholder="Wiek do:"
-          type="number"
-        />
+        <input v-model.trim="age_to" placeholder="Wiek do:" type="number" />
       </div>
-      <div class="">
-        <button @click="setFilters">Szukaj</button>
+      <div class="btns-container">
+        <button class="btn">Szukaj</button>
+        <button class="btn" @click="openModal">Dodaj</button>
       </div>
     </form>
-    <div class="add-user-container">
-      <button @click="openModal" class="add-user-btn">Dodaj</button>
-    </div>
+    <!-- <div class="add-user-container"> -->
+    <!-- </div> -->
   </div>
 </template>
 <script>
@@ -60,3 +49,42 @@ export default {
   },
 };
 </script>
+<style lang="scss" scoped>
+.users-filter-container {
+  padding-top: 0.5em;
+  background-color: #473bbb;
+  .age-filters {
+    display: flex;
+    justify-content: center;
+    padding: 1em;
+  }
+  input {
+    width: 30%;
+    border: none;
+    color: #fff;
+    font-size: 0.7em;
+    padding: 0.5em;
+    background-color: #473bbb;
+
+    border-bottom: 1px solid #fff;
+    &::placeholder {
+      color: #fff;
+      background-color: #473bbb;
+    }
+  }
+  .btn {
+    border: none;
+    cursor: pointer;
+    color: #fff;
+    background-color: #473bbb;
+    font-size: 0.7em;
+    padding: 0.5em;
+    border: 1px solid #fff;
+    margin: 0.3em;
+    &:hover {
+      background-color: #fff;
+      color: #473bbb;
+    }
+  }
+}
+</style>
