@@ -1,10 +1,18 @@
 import axios from "axios";
-
 import { createStore } from "vuex";
+import VuexPersist from "vuex-persist";
 
+const vuexLocalStorage = new VuexPersist({
+  key: "vuex",
+  storage: window.localStorage,
+  reducer: (state) => ({
+    keepUser: state.user,
+  }),
+});
 export default createStore({
   state: {
     users: [],
+    user: [],
     filters: {
       last_name: "",
       age_from: null,
@@ -24,6 +32,9 @@ export default createStore({
     modalIsOpen(state) {
       state.modalIsOpen = !state.modalIsOpen;
       console.log(state.modalIsOpen);
+    },
+    getUser(state, payload) {
+      state.user = payload;
     },
   },
   actions: {
@@ -66,6 +77,9 @@ export default createStore({
         console.log(err.message);
       }
     },
+    getUser({ commit }, payload) {
+      commit("getUser", payload);
+    },
   },
 
   getters: {
@@ -88,4 +102,5 @@ export default createStore({
       }
     },
   },
+  plugins: [vuexLocalStorage.plugin],
 });

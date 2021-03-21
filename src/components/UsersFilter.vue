@@ -18,7 +18,7 @@
       </div>
       <div class="btns-container">
         <button class="btn">Szukaj</button>
-        <button class="btn" @click="openModal">Dodaj</button>
+        <button class="btn" @click="openModal">Dodaj Użytkownika</button>
       </div>
     </form>
     <!-- <div class="add-user-container"> -->

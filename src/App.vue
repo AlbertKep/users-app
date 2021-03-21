@@ -1,21 +1,13 @@
 <template>
-  <h1 class="title">Users App</h1>
-  <users-filter />
-  <users-list />
-  <add-user />
+  <router-view />
 </template>
 
 <script>
-import UsersFilter from "./components/UsersFilter";
-import UsersList from "./components/UsersList";
-import AddUser from "./components/AddUser";
-
+// import Home from "./views/Home";
 export default {
   name: "App",
   components: {
-    UsersFilter,
-    UsersList,
-    AddUser,
+    // Home,
   },
 };
 </script>
