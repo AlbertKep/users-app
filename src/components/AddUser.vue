@@ -1,5 +1,8 @@
 <template>
-  <div class="container" :class="{ 'close-modal': modalIsOpen }">
+  <div class="add-user-container" :class="{ 'open-modal': modalIsOpen }">
+    <div class="close-modal-container">
+      <button class="close-modal-btn" @click="closeModal">X</button>
+    </div>
     <form @submit.prevent="addUser" class="add-user-form">
       <div class="box">
         <input v-model="newUser.first_name" type="text" placeholder="Imię" />
@@ -24,8 +27,8 @@
       <div class="box">
         <input v-model="newUser.age" type="text" placeholder="Wiek" />
       </div>
-      <div class="button-container">
-        <button @click="closeModal">Dodaj</button>
+      <div class="close-modal-container">
+        <button class="add-user-btn" @click="closeModal">Dodaj</button>
       </div>
     </form>
   </div>
@@ -43,7 +46,6 @@ export default {
         city: "",
         age: "",
       },
-      // modalIsOpen: false,
     };
   },
   computed: {
@@ -69,7 +71,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.container {
+.add-user-container {
   height: 100vh;
   width: 100vw;
   position: absolute;
@@ -78,11 +80,46 @@ export default {
   z-index: 999;
   background-color: #fff;
   opacity: 0.9;
-  display: flex;
+  display: none;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  .box {
+    margin: 1em;
+
+    input {
+      border: none;
+      color: #473bbb;
+      font-size: 1em;
+      padding: 0.3em;
+
+      border-bottom: 1px solid #473bbb;
+      &::placeholder {
+        color: #473bbb;
+      }
+    }
+  }
+  .close-modal-container {
+    align-self: flex-end;
+    margin: 20px;
+    button {
+      border: none;
+      cursor: pointer;
+      color: #473bbb;
+      background-color: transparent;
+      font-size: 1em;
+    }
+    .add-user-btn {
+      padding: 0.5em;
+      border: 1px solid #473bbb;
+      &:hover {
+        background-color: #473bbb;
+        color: #fff;
+      }
+    }
+  }
 }
-.close-modal {
-  display: none;
+.open-modal {
+  display: flex;
 }
 </style>

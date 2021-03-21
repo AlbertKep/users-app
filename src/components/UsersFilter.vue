@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="users-filter-container">
     <form @submit.prevent>
       <div class="box">
         <!-- <label for="search">Podaj nazwisko</label> -->

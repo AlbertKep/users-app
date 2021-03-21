@@ -10,7 +10,7 @@ export default createStore({
       age_from: null,
       age_to: null,
     },
-    modalIsOpen: true,
+    modalIsOpen: false,
   },
   mutations: {
     users(state, payload) {
