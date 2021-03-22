@@ -1,5 +1,5 @@
 <template>
-  <div class="add-user-container" :class="{ 'open-modal': modalIsOpen }">
+  <div class="add-user-container" v-if="modalIsOpen">
     <div class="close-modal-container">
       <button class="close-modal-btn" @click="closeModal">X</button>
     </div>
@@ -28,7 +28,7 @@
         <input v-model="newUser.age" type="text" placeholder="Wiek" />
       </div>
       <div class="close-modal-container">
-        <button class="add-user-btn" @click="closeModal">Dodaj</button>
+        <button class="btn add-user-btn" @click="closeModal">Dodaj</button>
       </div>
     </form>
   </div>
@@ -80,7 +80,7 @@ export default {
   background-color: #fff;
   z-index: 999;
   opacity: 0.9;
-  display: none;
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -105,7 +105,7 @@ export default {
   .close-modal-container {
     align-self: flex-end;
     margin: 20px;
-    button {
+    .btn {
       border: none;
       cursor: pointer;
       color: #473bbb;
@@ -121,8 +121,5 @@ export default {
       }
     }
   }
-}
-.open-modal {
-  display: flex;
 }
 </style>

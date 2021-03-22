@@ -19,6 +19,7 @@ export default createStore({
       age_to: null,
     },
     modalIsOpen: false,
+    removeUserModal: false,
   },
   mutations: {
     users(state, payload) {
@@ -32,6 +33,10 @@ export default createStore({
     modalIsOpen(state) {
       state.modalIsOpen = !state.modalIsOpen;
       console.log(state.modalIsOpen);
+    },
+    removeUserModal(state) {
+      state.removeUserModal = !state.removeUserModal;
+      console.log(state.removeUserModal);
     },
     getUser(state, payload) {
       state.user = payload;
@@ -47,12 +52,6 @@ export default createStore({
       } catch (err) {
         console.log(err.message);
       }
-    },
-    setFilters({ commit }, payload) {
-      commit("setFilters", payload);
-    },
-    modalIsOpen({ commit }) {
-      commit("modalIsOpen");
     },
     async addUser({ dispatch }, payload) {
       console.log(payload);
@@ -72,11 +71,38 @@ export default createStore({
           url: URI,
           data: data,
         });
-        dispatch("getUsers");
+        await dispatch("getUsers");
       } catch (err) {
         console.log(err.message);
       }
     },
+    async removeUser({ dispatch }, payload) {
+      let data = new FormData();
+      data.append("_method", "DELETE");
+      console.log(payload);
+      const URI = `http://fronttest.ekookna.pl/user/${payload}`;
+      try {
+        await axios({
+          headers: { "Content-Type": "multipart/form-data" },
+          method: "post",
+          url: URI,
+          data: data,
+        });
+        await dispatch("getUsers");
+      } catch (err) {
+        console.log(err.message);
+      }
+    },
+    setFilters({ commit }, payload) {
+      commit("setFilters", payload);
+    },
+    modalIsOpen({ commit }) {
+      commit("modalIsOpen");
+    },
+    removeUserModal({ commit }) {
+      commit("removeUserModal");
+    },
+
     getUser({ commit }, payload) {
       commit("getUser", payload);
     },

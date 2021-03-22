@@ -16,8 +16,6 @@
             Profil
           </router-link>
         </td>
-        <td class="data"><button class="btn">Edit</button></td>
-        <td class="data"><button class="btn">X</button></td>
       </tr>
     </table>
   </div>

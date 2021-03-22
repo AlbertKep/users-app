@@ -2,7 +2,6 @@
   <div class="users-filter-container">
     <form @submit.prevent="setFilters">
       <div class="last-name-filter">
-        <!-- <label for="search">Podaj nazwisko</label> -->
         <input
           v-model.trim="last_name"
           type="text"
@@ -11,9 +10,7 @@
         />
       </div>
       <div class="age-filters">
-        <!-- <label for="from">Wiek od:</label> -->
         <input v-model.trim="age_from" placeholder="Wiek od:" type="number" />
-        <!-- <label for="to">Wiek do:</label> -->
         <input v-model.trim="age_to" placeholder="Wiek do:" type="number" />
       </div>
       <div class="btns-container">
@@ -21,8 +18,6 @@
         <button class="btn" @click="openModal">Dodaj Użytkownika</button>
       </div>
     </form>
-    <!-- <div class="add-user-container"> -->
-    <!-- </div> -->
   </div>
 </template>
 <script>
