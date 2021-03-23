@@ -5,30 +5,74 @@
     </div>
     <form @submit.prevent="addUser" class="add-user-form">
       <div class="box">
-        <input v-model="newUser.first_name" type="text" placeholder="Imię" />
+        <input
+          v-model="newUser.first_name"
+          type="text"
+          placeholder="Imię"
+          @keyup="validForm"
+        />
+        <p v-if="!testFirstName" class="field-description">
+          Imię powinno zawierać tylko litery (min. 3)
+        </p>
       </div>
       <div class="box">
-        <input v-model="newUser.last_name" type="text" placeholder="Nazwisko" />
+        <input
+          v-model="newUser.last_name"
+          type="text"
+          placeholder="Nazwisko"
+          @keyup="validForm"
+        />
+        <p v-if="!testLastName" class="field-description">
+          Nazwisko powinno zawierać tylko litery (min. 3)
+        </p>
       </div>
       <div class="box">
-        <input v-model="newUser.street" type="text" placeholder="Ulica" />
+        <input
+          v-model="newUser.street"
+          type="text"
+          placeholder="Ulica"
+          @keyup="validForm"
+        />
+        <p v-if="!testStreet" class="field-description">
+          Ulica powinno zawierać tylko litery (min. 3)
+        </p>
       </div>
       <div class="box">
         <input
           v-model="newUser.postal_code"
           type="text"
           placeholder="Kod Pocztowy"
+          @keyup="validForm"
         />
+        <p v-if="!testPostalCode" class="field-description">
+          Na przykład 41-800
+        </p>
       </div>
 
       <div class="box">
-        <input v-model="newUser.city" type="text" placeholder="Miasto" />
+        <input
+          v-model="newUser.city"
+          type="text"
+          placeholder="Miasto"
+          @keyup="validForm"
+        />
+        <p v-if="!testCity" class="field-description">
+          Miasto powinno zawierać tylko litery (min. 3)
+        </p>
       </div>
       <div class="box">
-        <input v-model="newUser.age" type="text" placeholder="Wiek" />
+        <input
+          v-model="newUser.age"
+          type="text"
+          placeholder="Wiek"
+          @keyup="validForm"
+        />
+        <p v-if="!testAge" class="field-description">Wiek do 3 cyfr</p>
       </div>
       <div class="close-modal-container">
-        <button class="btn add-user-btn">Dodaj</button>
+        <button class="btn add-user-btn" :disabled="isDisabled">
+          {{ buttonText }}
+        </button>
       </div>
     </form>
   </div>
@@ -45,11 +89,39 @@ export default {
         city: "",
         age: "",
       },
+      isDisabled: true,
+      buttonText: "Uzupełnij Dane",
+      patterns: {
+        textField: /^[a-zA-ZżźćńółęąśŻŹĆĄŚĘŁÓŃ]{3,}$/,
+        postalCode: /^(\d{2})-(\d{3})$/,
+        age: /^\d{1,3}$/,
+      },
     };
   },
   computed: {
     modalIsOpen() {
       return this.$store.state.modalIsOpen;
+    },
+    editUserModal() {
+      return this.$store.state.editUserModal;
+    },
+    testFirstName() {
+      return this.patterns.textField.test(this.newUser.first_name);
+    },
+    testLastName() {
+      return this.patterns.textField.test(this.newUser.last_name);
+    },
+    testStreet() {
+      return this.patterns.textField.test(this.newUser.street);
+    },
+    testCity() {
+      return this.patterns.textField.test(this.newUser.city);
+    },
+    testPostalCode() {
+      return this.patterns.postalCode.test(this.newUser.postal_code);
+    },
+    testAge() {
+      return this.patterns.age.test(this.newUser.age);
     },
   },
   methods: {
@@ -63,6 +135,23 @@ export default {
         age: this.newUser.age,
       });
       this.closeModal();
+    },
+    validForm() {
+      if (
+        this.testFirstName &&
+        this.testLastName &&
+        this.testStreet &&
+        this.testCity &&
+        this.testPostalCode &&
+        this.testAge
+      ) {
+        this.isDisabled = false;
+        this.buttonText = "Dodaj";
+      } else {
+        this.isDisabled = true;
+        this.buttonText = "Uzupełnij Dane";
+      }
+      return this.isDisabled;
     },
     closeModal() {
       this.$store.dispatch("modalIsOpen");
@@ -100,6 +189,9 @@ export default {
         color: #473bbb;
       }
     }
+    .field-description {
+      font-size: 0.7em;
+    }
   }
   .close-modal-container {
     align-self: flex-end;
@@ -107,9 +199,12 @@ export default {
     .btn {
       border: none;
       cursor: pointer;
-      color: #473bbb;
-      background-color: #fff;
+      color: #fff;
+      background-color: #473bbb;
       font-size: 1em;
+      &:disabled {
+        opacity: 0.5;
+      }
     }
   }
   .add-user-btn {

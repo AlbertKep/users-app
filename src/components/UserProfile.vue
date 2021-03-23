@@ -31,7 +31,15 @@
     </div>
   </div>
   <remove-user :id="user.id" />
-  <edit-user :first-name="user.first_name" :id="user.id" />
+  <edit-user
+    :id="user.id"
+    :first-name="user.first_name"
+    :last-name="user.last_name"
+    :street="user.street"
+    :postal-code="user.postal_code"
+    :city="user.city"
+    :age="user.age"
+  />
 </template>
 <script>
 import RemoveUser from "../components/RemoveUser";

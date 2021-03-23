@@ -9,34 +9,70 @@
           <input
             v-model="editedUser.first_name"
             type="text"
-            :placeholder="oldFirstName"
+            placeholder="Imię"
+            @keyup="validForm"
           />
+          <p v-if="!testFirstName" class="field-description">
+            Imię powinno zawierać tylko litery (min. 3)
+          </p>
         </div>
         <div class="box">
           <input
             v-model="editedUser.last_name"
             type="text"
             placeholder="Nazwisko"
+            @keyup="validForm"
           />
+          <p v-if="!testLastName" class="field-description">
+            Nazwisko powinno zawierać tylko litery (min. 3)
+          </p>
         </div>
         <div class="box">
-          <input v-model="editedUser.street" type="text" placeholder="Ulica" />
+          <input
+            v-model="editedUser.street"
+            type="text"
+            placeholder="Ulica"
+            @keyup="validForm"
+          />
+          <p v-if="!testStreet" class="field-description">
+            Ulica powinno zawierać tylko litery (min. 3)
+          </p>
         </div>
         <div class="box">
           <input
             v-model="editedUser.postal_code"
             type="text"
-            placeholder="Kod Pocztowy"
+            placeholder="Kod pocztowy"
+            @keyup="validForm"
           />
+          <p v-if="!testPostalCode" class="field-description">
+            Na przykład 41-800
+          </p>
         </div>
         <div class="box">
-          <input v-model="editedUser.city" type="text" placeholder="Miasto" />
+          <input
+            v-model="editedUser.city"
+            type="text"
+            placeholder="Miasto"
+            @keyup="validForm"
+          />
+          <p v-if="!testCity" class="field-description">
+            Miasto powinno zawierać tylko litery (min. 3)
+          </p>
         </div>
         <div class="box">
-          <input v-model="editedUser.age" type="text" placeholder="Wiek" />
+          <input
+            v-model="editedUser.age"
+            type="text"
+            placeholder="Wiek"
+            @keyup="validForm"
+          />
+          <p v-if="!testAge" class="field-description">Wiek do 3 cyfr</p>
         </div>
         <div class="close-modal-container">
-          <button class="btn add-user-btn">Zapisz zmiany</button>
+          <button class="btn edit-user-btn" :disabled="isDisabled">
+            {{ buttonText }}
+          </button>
         </div>
       </form>
     </div>
@@ -46,12 +82,10 @@
 export default {
   props: {
     id: Number,
-    firstName: String,
   },
   data() {
     return {
       editedUser: {
-        id: this.id,
         first_name: "",
         last_name: "",
         postal_code: "",
@@ -59,14 +93,36 @@ export default {
         city: "",
         age: "",
       },
+      isDisabled: true,
+      buttonText: "Uzupełnij Dane",
+      patterns: {
+        textField: /^[a-zA-ZżźćńółęąśŻŹĆĄŚĘŁÓŃ]{3,}$/,
+        postalCode: /^(\d{2})-(\d{3})$/,
+        age: /^\d{1,3}$/,
+      },
     };
   },
   computed: {
     editUserModal() {
       return this.$store.state.editUserModal;
     },
-    oldFirstName() {
-      return this.firstName;
+    testFirstName() {
+      return this.patterns.textField.test(this.editedUser.first_name);
+    },
+    testLastName() {
+      return this.patterns.textField.test(this.editedUser.last_name);
+    },
+    testStreet() {
+      return this.patterns.textField.test(this.editedUser.street);
+    },
+    testCity() {
+      return this.patterns.textField.test(this.editedUser.city);
+    },
+    testPostalCode() {
+      return this.patterns.postalCode.test(this.editedUser.postal_code);
+    },
+    testAge() {
+      return this.patterns.age.test(this.editedUser.age);
     },
   },
   methods: {
@@ -89,10 +145,23 @@ export default {
     goHome() {
       this.$router.push("/");
     },
-  },
-  mounted() {
-    console.log(this.firstName);
-    this.editedUser.first_name = this.firstName;
+    validForm() {
+      if (
+        this.testFirstName &&
+        this.testLastName &&
+        this.testStreet &&
+        this.testCity &&
+        this.testPostalCode &&
+        this.testAge
+      ) {
+        this.isDisabled = false;
+        this.buttonText = "Zapisz zmiany";
+      } else {
+        this.isDisabled = true;
+        this.buttonText = "Uzupełnij Dane";
+      }
+      return this.isDisabled;
+    },
   },
 };
 </script>
@@ -126,6 +195,9 @@ export default {
         color: #473bbb;
       }
     }
+    .field-description {
+      font-size: 0.7em;
+    }
   }
   .close-modal-container {
     align-self: flex-end;
@@ -133,12 +205,17 @@ export default {
     .btn {
       border: none;
       cursor: pointer;
-      color: #473bbb;
-      background-color: #fff;
+      color: #fff;
+      background-color: #473bbb;
       font-size: 1em;
+      // border: 1px solid #473bbb;
+      padding: 0.5em;
+      &:disabled {
+        opacity: 0.5;
+      }
     }
   }
-  .add-user-btn {
+  .edit-user-btn {
     padding: 0.5em;
     border: 1px solid #473bbb;
     &:hover {
