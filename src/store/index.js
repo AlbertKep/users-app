@@ -27,6 +27,8 @@ export default createStore({
       state.users = payload;
     },
     setFilters(state, payload) {
+      console.log("tutaj");
+
       state.filters.lastName = payload.lastName;
       state.filters.ageFrom = payload.ageFrom;
       state.filters.ageTo = payload.ageTo;
@@ -56,7 +58,6 @@ export default createStore({
       }
     },
     async addUser({ dispatch }, payload) {
-      console.log(payload);
       const URI = "http://fronttest.ekookna.pl/user";
       try {
         let data = new FormData();
@@ -79,11 +80,11 @@ export default createStore({
       }
     },
     async removeUser({ dispatch }, payload) {
-      let data = new FormData();
-      data.append("_method", "DELETE");
-      console.log(payload);
       const URI = `http://fronttest.ekookna.pl/user/${payload}`;
       try {
+        let data = new FormData();
+        data.append("_method", "DELETE");
+
         await axios({
           headers: { "Content-Type": "multipart/form-data" },
           method: "post",
@@ -96,20 +97,17 @@ export default createStore({
       }
     },
     async editUser({ dispatch }, payload) {
-      let data = new FormData();
-      // const filteredPayload = payload.filter((property) => {
-      //   return property;
-      // });
-      console.log(payload);
-      data.append("_method", "PUT");
-      data.append("first_name", payload.first_name);
-      data.append("last_name", payload.last_name);
-      data.append("postal_code", payload.postal_code);
-      data.append("street", payload.street);
-      data.append("city", payload.city);
-      data.append("age", payload.age);
       const URI = `http://fronttest.ekookna.pl/user/${payload.id}`;
       try {
+        let data = new FormData();
+        data.append("_method", "PUT");
+        data.append("first_name", payload.first_name);
+        data.append("last_name", payload.last_name);
+        data.append("postal_code", payload.postal_code);
+        data.append("street", payload.street);
+        data.append("city", payload.city);
+        data.append("age", payload.age);
+
         await axios({
           headers: { "Content-Type": "multipart/form-data" },
           method: "post",
@@ -120,8 +118,6 @@ export default createStore({
       } catch (err) {
         console.log(err.message);
       }
-
-      console.log(payload);
       dispatch("getUsers");
     },
     setFilters({ commit }, payload) {
@@ -154,14 +150,12 @@ export default createStore({
         const ageFrom = parseInt(state.filters.ageFrom);
         const ageTo = parseInt(state.filters.ageTo);
         const filteredUsers = getters.users.filter((user) => {
-          console.log(typeof user.id, typeof ageFrom);
           return (
             ageFrom <= user.age &&
             ageTo >= user.age &&
             user.last_name.includes(state.filters.lastName)
           );
         });
-        console.log(filteredUsers);
         return filteredUsers;
       } else {
         return getters.users;

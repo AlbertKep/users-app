@@ -1,8 +1,9 @@
 <template>
   <div class="users-filter-container">
-    <form @submit.prevent="setFilters">
+    <form class="users-filter-form" @submit.prevent="setFilters">
       <div class="last-name-filter">
         <input
+          class="last-name-input"
           v-model.trim="lastName"
           type="text"
           id="search"
@@ -12,12 +13,14 @@
       </div>
       <div class="age-filters">
         <input
+          class="age-input"
           v-model.trim="ageFrom"
           placeholder="Wiek od:"
           type="text"
           @keyup="validForm"
         />
         <input
+          class="age-input"
           v-model.trim="ageTo"
           placeholder="Wiek do:"
           type="text"
@@ -25,8 +28,9 @@
         />
       </div>
       <div class="btns-container">
+        <button v-if="listUsers" class="btn" @click="getUsers">Lista</button>
         <button class="btn search-button" :disabled="isDisabled">Szukaj</button>
-        <button class="btn" @click="openModal">Dodaj Użytkownika</button>
+        <button class="btn" @click="openModal">Dodaj</button>
       </div>
     </form>
   </div>
@@ -43,9 +47,13 @@ export default {
         age: /^\d{1,3}$/,
       },
       isDisabled: true,
+      listUsers: false,
     };
   },
   computed: {
+    filteredUsers() {
+      return this.$store.getters.filteredUsers;
+    },
     testLastName() {
       return this.patterns.lastName.test(this.lastName);
     },
@@ -65,7 +73,7 @@ export default {
       }
     },
     setFilters() {
-      console.log("szukaj");
+      this.listUsers = true;
       this.$store.dispatch("setFilters", {
         lastName: this.lastName,
         ageFrom: this.ageFrom,
@@ -75,6 +83,16 @@ export default {
     openModal() {
       this.$store.dispatch("modalIsOpen");
     },
+    resetInputs() {
+      (this.lastName = ""), (this.ageFrom = null), (this.ageTo = null);
+    },
+    getUsers() {
+      this.resetInputs();
+      this.$store.getters.filteredUsers;
+      setTimeout(() => {
+        this.listUsers = false;
+      }, 50);
+    },
   },
 };
 </script>
@@ -82,12 +100,16 @@ export default {
 .users-filter-container {
   padding-top: 0.5em;
   background-color: #473bbb;
+  .last-name-filter,
+  .age-filters {
+    padding: 1em;
+  }
   .age-filters {
     display: flex;
     justify-content: center;
-    padding: 1em;
   }
-  input {
+  .last-name-input,
+  .age-input {
     width: 50%;
     border: none;
     color: #fff;
@@ -117,6 +139,17 @@ export default {
     &:disabled {
       opacity: 0.5;
     }
+  }
+}
+@media only screen and (min-width: 768px) {
+  .users-filter-form {
+    display: grid;
+  }
+  .users-filter-form {
+    grid-template-columns: repeat(3, 33%);
+  }
+  .btns-container {
+    margin: auto;
   }
 }
 </style>

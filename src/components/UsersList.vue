@@ -78,4 +78,10 @@ export default {
     }
   }
 }
+@media only screen and (min-width: 768px) {
+  .users-table {
+    margin-top: 1em;
+    width: 80%;
+  }
+}
 </style>

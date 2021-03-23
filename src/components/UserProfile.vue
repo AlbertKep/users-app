@@ -22,7 +22,7 @@
       </tr>
     </table>
     <div class="btn-controler-container">
-      <button class="btn" @click="openEditUserModal">Edit</button>
+      <button class="btn" @click="openEditUserModal">Edytuj</button>
       <button class="btn" @click="openRemoveUserModal">Usuń</button>
     </div>
 
@@ -126,6 +126,12 @@ export default {
       background-color: #fff;
       color: #473bbb;
     }
+  }
+}
+@media only screen and (min-width: 768px) {
+  .btn-controler-container {
+    text-align: left;
+    padding-left: 1.5em;
   }
 }
 </style>
