@@ -206,6 +206,7 @@ export default {
       border: none;
       background: transparent;
       color: #473bbb;
+      font-size: 1.3em;
     }
     .btn {
       border: none;

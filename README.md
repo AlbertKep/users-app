@@ -1,24 +1,26 @@
-# users-app
+# Users App
 
-## Project setup
-```
-npm install
-```
+Live: https://users-app-list.netlify.app/
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## Description
 
-### Compiles and minifies for production
-```
-npm run build
-```
+Application used for downloading, displaying the list of users and filtering users by age. After the selected user, the application redirects to the view with its
+detailed data like a full name, city, street, postal code and age. User can edit or delete profile.
 
-### Lints and fixes files
-```
-npm run lint
-```
+### Technologies and extra packages
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+- Vue,
+- vuex,
+- vue-router,
+- axios,
+- vuex-persist,
+
+### Setup
+
+To run this application, install it locally using npm:
+
+```
+$ cd ../companies-list
+$ npm install
+$ npm run serve
+```

@@ -26,5 +26,11 @@ body {
     color: #fff;
     background-color: #473bbb;
   }
+
+  @media only screen and (min-width: 768px) {
+    .title {
+      font-size: 2em;
+    }
+  }
 }
 </style>
