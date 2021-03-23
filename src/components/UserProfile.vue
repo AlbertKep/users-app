@@ -58,7 +58,6 @@ export default {
   methods: {
     getUser() {
       const id = parseInt(this.$route.params.id);
-      console.log(typeof id);
       const users = this.$store.getters.users;
       users.forEach((user) => {
         if (user.id === id) {

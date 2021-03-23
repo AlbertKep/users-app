@@ -3,18 +3,29 @@
     <form @submit.prevent="setFilters">
       <div class="last-name-filter">
         <input
-          v-model.trim="last_name"
+          v-model.trim="lastName"
           type="text"
           id="search"
           placeholder="Podaj nazwisko"
+          @keyup="validForm"
         />
       </div>
       <div class="age-filters">
-        <input v-model.trim="age_from" placeholder="Wiek od:" type="number" />
-        <input v-model.trim="age_to" placeholder="Wiek do:" type="number" />
+        <input
+          v-model.trim="ageFrom"
+          placeholder="Wiek od:"
+          type="text"
+          @keyup="validForm"
+        />
+        <input
+          v-model.trim="ageTo"
+          placeholder="Wiek do:"
+          type="text"
+          @keyup="validForm"
+        />
       </div>
       <div class="btns-container">
-        <button class="btn">Szukaj</button>
+        <button class="btn search-button" :disabled="isDisabled">Szukaj</button>
         <button class="btn" @click="openModal">Dodaj Użytkownika</button>
       </div>
     </form>
@@ -24,21 +35,44 @@
 export default {
   data() {
     return {
-      last_name: "",
-      age_from: null,
-      age_to: null,
+      lastName: "",
+      ageFrom: null,
+      ageTo: null,
+      patterns: {
+        lastName: /^[a-zA-ZżźćńółęąśŻŹĆĄŚĘŁÓŃ]{3,}$/,
+        age: /^\d{1,3}$/,
+      },
+      isDisabled: true,
     };
   },
+  computed: {
+    testLastName() {
+      return this.patterns.lastName.test(this.lastName);
+    },
+    testAgeFrom() {
+      return this.patterns.age.test(this.ageFrom);
+    },
+    testAgeTo() {
+      return this.patterns.age.test(this.ageTo);
+    },
+  },
   methods: {
+    validForm() {
+      if (this.lastName && this.testAgeFrom && this.testAgeTo) {
+        this.isDisabled = false;
+      } else {
+        this.isDisabled = true;
+      }
+    },
     setFilters() {
+      console.log("szukaj");
       this.$store.dispatch("setFilters", {
-        last_name: this.last_name,
-        age_from: this.age_from,
-        age_to: this.age_to,
+        lastName: this.lastName,
+        ageFrom: this.ageFrom,
+        ageTo: this.ageTo,
       });
     },
     openModal() {
-      console.log("fired");
       this.$store.dispatch("modalIsOpen");
     },
   },
@@ -79,6 +113,9 @@ export default {
     &:hover {
       background-color: #fff;
       color: #473bbb;
+    }
+    &:disabled {
+      opacity: 0.5;
     }
   }
 }

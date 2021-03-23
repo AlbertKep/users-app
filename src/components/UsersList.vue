@@ -1,13 +1,14 @@
 <template>
   <div class="users-list-container">
-    <table class="users-table">
+    <p v-if="filteredUsers.length === 0">Brak wyników</p>
+    <table v-else class="users-table">
       <tr class="users-row">
         <th class="property" scope="col">Imię</th>
         <th class="property" scope="col">Nazwisko</th>
         <th class="property" scope="col">Wiek</th>
       </tr>
 
-      <tr v-for="user in filterUsers" :key="user.id">
+      <tr v-for="user in filteredUsers" :key="user.id">
         <td class="data">{{ user.first_name }}</td>
         <td class="data">{{ user.last_name }}</td>
         <td class="data">{{ user.age }}</td>
@@ -22,11 +23,12 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 export default {
   name: "UsersList",
   computed: {
-    ...mapGetters(["filterUsers"]),
+    filteredUsers() {
+      return this.$store.getters.filteredUsers;
+    },
   },
   methods: {
     getUsersList() {

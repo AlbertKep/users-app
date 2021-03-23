@@ -14,9 +14,9 @@ export default createStore({
     users: [],
     user: [],
     filters: {
-      last_name: "",
-      age_from: null,
-      age_to: null,
+      lastName: "",
+      ageFrom: null,
+      ageTo: null,
     },
     modalIsOpen: false,
     removeUserModal: false,
@@ -27,21 +27,18 @@ export default createStore({
       state.users = payload;
     },
     setFilters(state, payload) {
-      state.filters.last_name = payload.last_name;
-      state.filters.age_from = payload.age_from;
-      state.filters.age_to = payload.age_to;
+      state.filters.lastName = payload.lastName;
+      state.filters.ageFrom = payload.ageFrom;
+      state.filters.ageTo = payload.ageTo;
     },
     modalIsOpen(state) {
       state.modalIsOpen = !state.modalIsOpen;
-      console.log(state.modalIsOpen);
     },
     removeUserModal(state) {
       state.removeUserModal = !state.removeUserModal;
-      console.log(state.removeUserModal);
     },
     editUserModal(state) {
       state.editUserModal = !state.editUserModal;
-      // console.log(state.removeUserModal);
     },
     getUser(state, payload) {
       state.user = payload;
@@ -148,16 +145,23 @@ export default createStore({
     users(state) {
       return state.users;
     },
-    filterUsers(state, getters) {
-      if (state.filters.last_name || state.filters.age_from) {
-        const age_from = parseInt(state.filters.age_from);
-        const age_to = parseInt(state.filters.age_to);
+    filteredUsers(state, getters) {
+      if (
+        state.filters.lastName &&
+        state.filters.ageFrom &&
+        state.filters.ageTo
+      ) {
+        const ageFrom = parseInt(state.filters.ageFrom);
+        const ageTo = parseInt(state.filters.ageTo);
         const filteredUsers = getters.users.filter((user) => {
+          console.log(typeof user.id, typeof ageFrom);
           return (
-            age_from <= user.age && age_to >= user.age
-            // user.last_name.includes(state.filters.last_name)
+            ageFrom <= user.age &&
+            ageTo >= user.age &&
+            user.last_name.includes(state.filters.lastName)
           );
         });
+        console.log(filteredUsers);
         return filteredUsers;
       } else {
         return getters.users;

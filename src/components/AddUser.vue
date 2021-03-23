@@ -187,6 +187,7 @@ export default {
       border-bottom: 1px solid #473bbb;
       &::placeholder {
         color: #473bbb;
+        opacity: 0.7;
       }
     }
     .field-description {
@@ -196,6 +197,11 @@ export default {
   .close-modal-container {
     align-self: flex-end;
     margin: 20px;
+    .close-modal-btn {
+      border: none;
+      background: transparent;
+      color: #473bbb;
+    }
     .btn {
       border: none;
       cursor: pointer;
