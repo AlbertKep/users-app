@@ -28,7 +28,9 @@
         />
       </div>
       <div class="btns-container">
-        <button v-if="listUsers" class="btn" @click="getUsers">Lista</button>
+        <button v-if="listUsersButton" class="btn" @click="getUsers">
+          Lista
+        </button>
         <button class="btn search-button" :disabled="isDisabled">Szukaj</button>
         <button class="btn" @click="openModal">Dodaj</button>
       </div>
@@ -47,7 +49,6 @@ export default {
         age: /^\d{1,3}$/,
       },
       isDisabled: true,
-      listUsers: false,
     };
   },
   computed: {
@@ -63,6 +64,9 @@ export default {
     testAgeTo() {
       return this.patterns.age.test(this.ageTo);
     },
+    listUsersButton() {
+      return this.$store.state.displayListUsersButton;
+    },
   },
   methods: {
     validForm() {
@@ -73,12 +77,13 @@ export default {
       }
     },
     setFilters() {
-      this.listUsers = true;
+      this.disableListUsersButton();
       this.$store.dispatch("setFilters", {
         lastName: this.lastName,
         ageFrom: this.ageFrom,
         ageTo: this.ageTo,
       });
+      console.log(this.listUsersButton);
     },
     openModal() {
       this.$store.dispatch("modalIsOpen");
@@ -92,6 +97,10 @@ export default {
       setTimeout(() => {
         this.listUsers = false;
       }, 50);
+    },
+    disableListUsersButton() {
+      console.log(this.listUsersButton);
+      this.$store.dispatch("disableListUsersButton");
     },
   },
 };

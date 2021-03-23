@@ -21,6 +21,7 @@ export default createStore({
     modalIsOpen: false,
     removeUserModal: false,
     editUserModal: false,
+    displayListUsersButton: false,
   },
   mutations: {
     users(state, payload) {
@@ -44,6 +45,10 @@ export default createStore({
     },
     getUser(state, payload) {
       state.user = payload;
+    },
+    disableListUsersButton(state) {
+      state.displayListUsersButton = !state.displayListUsersButton;
+      console.log(state.displayListUsersButton);
     },
   },
   actions: {
@@ -135,6 +140,9 @@ export default createStore({
     getUser({ commit }, payload) {
       commit("getUser", payload);
     },
+    disableListUsersButton({ commit }) {
+      commit("disableListUsersButton");
+    },
   },
 
   getters: {
@@ -153,7 +161,9 @@ export default createStore({
           return (
             ageFrom <= user.age &&
             ageTo >= user.age &&
-            user.last_name.includes(state.filters.lastName)
+            user.last_name
+              .toLocaleLowerCase()
+              .includes(state.filters.lastName.toLocaleLowerCase())
           );
         });
         return filteredUsers;
