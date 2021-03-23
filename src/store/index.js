@@ -20,6 +20,7 @@ export default createStore({
     },
     modalIsOpen: false,
     removeUserModal: false,
+    editUserModal: false,
   },
   mutations: {
     users(state, payload) {
@@ -37,6 +38,10 @@ export default createStore({
     removeUserModal(state) {
       state.removeUserModal = !state.removeUserModal;
       console.log(state.removeUserModal);
+    },
+    editUserModal(state) {
+      state.editUserModal = !state.editUserModal;
+      // console.log(state.removeUserModal);
     },
     getUser(state, payload) {
       state.user = payload;
@@ -93,6 +98,35 @@ export default createStore({
         console.log(err.message);
       }
     },
+    async editUser({ dispatch }, payload) {
+      let data = new FormData();
+      // const filteredPayload = payload.filter((property) => {
+      //   return property;
+      // });
+      console.log(payload);
+      data.append("_method", "PUT");
+      data.append("first_name", payload.first_name);
+      data.append("last_name", payload.last_name);
+      data.append("postal_code", payload.postal_code);
+      data.append("street", payload.street);
+      data.append("city", payload.city);
+      data.append("age", payload.age);
+      const URI = `http://fronttest.ekookna.pl/user/${payload.id}`;
+      try {
+        await axios({
+          headers: { "Content-Type": "multipart/form-data" },
+          method: "post",
+          url: URI,
+          data: data,
+        });
+        await dispatch("getUsers");
+      } catch (err) {
+        console.log(err.message);
+      }
+
+      console.log(payload);
+      dispatch("getUsers");
+    },
     setFilters({ commit }, payload) {
       commit("setFilters", payload);
     },
@@ -102,7 +136,9 @@ export default createStore({
     removeUserModal({ commit }) {
       commit("removeUserModal");
     },
-
+    editUserModal({ commit }) {
+      commit("editUserModal");
+    },
     getUser({ commit }, payload) {
       commit("getUser", payload);
     },

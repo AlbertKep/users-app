@@ -55,7 +55,7 @@ export default {
   }
   .property,
   .data {
-    font-size: 0.8em;
+    font-size: 1em;
     padding: 1em 0.3em;
   }
   .go-to-user {

@@ -22,7 +22,7 @@
       </tr>
     </table>
     <div class="btn-controler-container">
-      <button class="btn">Edit</button>
+      <button class="btn" @click="openEditUserModal">Edit</button>
       <button class="btn" @click="openRemoveUserModal">Usuń</button>
     </div>
 
@@ -31,13 +31,16 @@
     </div>
   </div>
   <remove-user :id="user.id" />
+  <edit-user :first-name="user.first_name" :id="user.id" />
 </template>
 <script>
 import RemoveUser from "../components/RemoveUser";
+import EditUser from "../components/EditUser";
 
 export default {
   components: {
     RemoveUser,
+    EditUser,
   },
   data() {
     return {
@@ -64,6 +67,9 @@ export default {
     },
     openRemoveUserModal() {
       this.$store.dispatch("removeUserModal");
+    },
+    openEditUserModal() {
+      this.$store.dispatch("editUserModal");
     },
   },
   mounted() {

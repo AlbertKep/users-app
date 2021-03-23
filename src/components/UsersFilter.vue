@@ -54,10 +54,10 @@ export default {
     padding: 1em;
   }
   input {
-    width: 30%;
+    width: 50%;
     border: none;
     color: #fff;
-    font-size: 0.7em;
+    font-size: 1em;
     padding: 0.5em;
     background-color: #473bbb;
 
@@ -72,7 +72,7 @@ export default {
     cursor: pointer;
     color: #fff;
     background-color: #473bbb;
-    font-size: 0.7em;
+    font-size: 1em;
     padding: 0.5em;
     border: 1px solid #fff;
     margin: 0.3em;

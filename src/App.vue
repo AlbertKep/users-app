@@ -6,9 +6,6 @@
 // import Home from "./views/Home";
 export default {
   name: "App",
-  components: {
-    // Home,
-  },
 };
 </script>
 <style lang="scss">
@@ -24,9 +21,7 @@ body {
   text-align: center;
   color: #473bbb;
 
-  // margin-top: 60px;
   .title {
-    text-align: left;
     padding: 1em 0.5em;
     color: #fff;
     background-color: #473bbb;

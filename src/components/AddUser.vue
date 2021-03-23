@@ -28,7 +28,7 @@
         <input v-model="newUser.age" type="text" placeholder="Wiek" />
       </div>
       <div class="close-modal-container">
-        <button class="btn add-user-btn" @click="closeModal">Dodaj</button>
+        <button class="btn add-user-btn">Dodaj</button>
       </div>
     </form>
   </div>
@@ -38,7 +38,6 @@ export default {
   data() {
     return {
       newUser: {
-        id: null,
         first_name: "",
         last_name: "",
         postal_code: "",
@@ -63,6 +62,7 @@ export default {
         city: this.newUser.city,
         age: this.newUser.age,
       });
+      this.closeModal();
     },
     closeModal() {
       this.$store.dispatch("modalIsOpen");
@@ -95,7 +95,6 @@ export default {
       color: #473bbb;
       font-size: 1em;
       padding: 0.3em;
-
       border-bottom: 1px solid #473bbb;
       &::placeholder {
         color: #473bbb;
@@ -112,13 +111,13 @@ export default {
       background-color: #fff;
       font-size: 1em;
     }
-    .add-user-btn {
-      padding: 0.5em;
-      border: 1px solid #473bbb;
-      &:hover {
-        background-color: #473bbb;
-        color: #fff;
-      }
+  }
+  .add-user-btn {
+    padding: 0.5em;
+    border: 1px solid #473bbb;
+    &:hover {
+      background-color: #473bbb;
+      color: #fff;
     }
   }
 }
